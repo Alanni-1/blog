@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>var、let和const 的区别和实现原理</title>
+      <link href="/blog/2021/07/15/one/"/>
+      <url>/blog/2021/07/15/one/</url>
+      
+        <content type="html"><![CDATA[<p>es6里面新增了两个声明变量的方法，一个是let，用于声明变量。一个是const，用于声明常量。var、let和const的区别经常会被面试官问到，大多数人都可能回答的是作用域和变量提升这两方面的不同，但你们知道内在原理吗？</p><p>下面我们就从<code>声明过程</code>、<code>内存分配</code>和<code>变量提升</code>三个方面来看一下这三者之间的区别。</p><h2 id="声明过程"><a href="#声明过程" class="headerlink" title="声明过程"></a>声明过程</h2><h3 id="var"><a href="#var" class="headerlink" title="var"></a>var</h3><p>遇到有var的作用域,在任何语句执行前都已经完成了<code>声明和初始化</code>，也就是变量提升而且拿到undefined的原因由来。</p><div class="note primary modern"><p>通过下面示例可以看到变量a的声明跑到console.log的前面去了，只是赋值还是在console.log之后进行赋值的，console.log得到的结果就是undefined. 这就是所谓的变量提升了。</p></div><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 变量提升后</span></span><br><span class="line"><span class="keyword">var</span> a; <span class="comment">// 声明并初始化</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// a未赋值返回undefined</span></span><br><span class="line">a = <span class="number">10</span>; <span class="comment">// 赋值</span></span><br></pre></td></tr></table></figure><h3 id="let"><a href="#let" class="headerlink" title="let"></a>let</h3><p>解析器进入一个<code>块级作用域</code>,发现let关键字，变量<code>只是先完成声明</code>,并没有到初始化那一步。此时如果在此作用域提前访问，则报错xx is not defined，这就是<code>暂时性死区</code>的由来。等到解析到有let那一行的时候,才会进入初始化阶段。如果let的那一行是赋值操作，则初始化和赋值同时进行。</p><div class="note danger flat"><p>let初始化赋值之前访问，就会报错未定义变量</p></div><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// b is not defined</span></span><br><span class="line"><span class="keyword">let</span> b = <span class="number">20</span>;</span><br></pre></td></tr></table></figure><h3 id="const"><a href="#const" class="headerlink" title="const"></a>const</h3><p>const、class都是同let—样的道理。const声明的是一个常量，常量是<code>不可修改</code>的，在没有完成初始化和赋值操作是访问会报错，<code>不能重复声明</code>同一个常量。</p><h2 id="内存分配"><a href="#内存分配" class="headerlink" title="内存分配"></a>内存分配</h2><h3 id="var-1"><a href="#var-1" class="headerlink" title="var"></a>var</h3><p>var的话，会直接在栈内存里预分配内存空间,然后等到实际语句执行的时候,再存储对应的变量,如果传的是引用类型，那么会在堆内存里开辟一个内存空间存储实际内容，栈内存会存储一个指向堆内存的指针</p><h3 id="let-1"><a href="#let-1" class="headerlink" title="let"></a>let</h3><p>let的话，是不会在栈内存里预分配内存空间，而且在栈内存分配变量时,做一个检查,如果已经有相同变量名存在就会报错 Identifier ‘变量’ has already been declared</p><div class="note danger flat"><p>如果用let重复声明同一个变量，那么这时候就会报错：变量b已经被声明了</p></div><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> b = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">let</span> b = <span class="number">20</span>;<span class="comment">//error : Identifier &#x27;b&#x27; has already been declared</span></span><br></pre></td></tr></table></figure><h3 id="const-1"><a href="#const-1" class="headerlink" title="const"></a>const</h3><p>const的话，也不会预分配内存空间，在栈内存分配变量时也会做同样的检查。不过const存储的变量是<code>不可修改</code>的，对于基本类型来说你无法修改定义的值,对于引用类型来说你无法修改栈内存里分配的指针,但是你可以修改指针指向的对象里面的属性</p><div class="note danger flat"><p>const声明的常量是不可以直接更改的，一旦你尝试着去修改一个常量的时候，浏览器就会告诉你，常量不可以被修改！</p></div><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> c = <span class="number">3.1415926</span>;</span><br><span class="line">c = <span class="number">123</span>;<span class="comment">//error : Assignment to constant variable</span></span><br></pre></td></tr></table></figure><h2 id="变量提升"><a href="#变量提升" class="headerlink" title="变量提升"></a>变量提升</h2><p>let const和var三者其实会存在变量提升</p><p>let只是创建过程提升，初始化过程并没有提升，所以会产生暂时性死区。</p><p>var的创建和初始化过程都提升了，所以在赋值前访问会得到undefined</p><p>function的创建、初始化、赋值都被提升了</p><div class="note info modern"><p>function：声明、初始化、赋值一开始就全部完成,所以函数的变量提升优先级更高。</p></div>]]></content>
+      
+      
+      <categories>
+          
+          <category> 面试 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ES6 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="/blog/2021/06/04/hello-world/"/>
       <url>/blog/2021/06/04/hello-world/</url>
@@ -13,14 +38,14 @@
       
       <categories>
           
-          <category> hai </category>
+          <category> 面试 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 爱好 </tag>
+            <tag> ES6 </tag>
             
         </tags>
       
