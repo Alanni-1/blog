@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>4个你需要了解的CSS 函数</title>
+      <link href="/blog/2022/05/11/8d3432c/"/>
+      <url>/blog/2022/05/11/8d3432c/</url>
+      
+        <content type="html"><![CDATA[<h1 id="CSS-函数"><a href="#CSS-函数" class="headerlink" title="CSS 函数"></a><strong>CSS 函数</strong></h1><p>CSS 函数用作各种 CSS 属性的值。所以基本上我们用它来评估一些 CSS 值。让我们看看其中的一些功能。</p><h1 id="1、attr"><a href="#1、attr" class="headerlink" title="1、attr()"></a><strong>1、attr()</strong></h1><p>此函数用于访问元素属性的值。让我们通过例子来理解它。</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---- html ---</span><br><span class="line">&lt;div data-bg=&quot;black&quot;&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">--- css ---</span><br><span class="line">div &#123;</span><br><span class="line">width: 100px;</span><br><span class="line">height: 100px;</span><br><span class="line">backgound: arrt(data-bg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>你可以看到我们有一个“div”和一个“data-bg”自定义属性，现在我可以使用 attr() 在 CSS 中访问它的值。所以，这就是你可以做很多有趣的事情的方式。</p><p>所以输出将是这样的。</p><p><img src="https://alanni-1.github.io/blog/img/8d3432c/01.png"></p><h1 id="2、calc"><a href="#2、calc" class="headerlink" title="2、calc()"></a><strong>2、calc()</strong></h1><p>在 attr() 之后我们有 calc()。顾名思义，它有助于执行 CSS 值的计算。当我们想要进行精确计算时，这可能很有用。</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">--- html ---</span><br><span class="line">&lt;div class=&quot;box&quot;&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">--- css ---</span><br><span class="line">.box &#123;</span><br><span class="line">width: calc(100px * 5 - 50px);</span><br><span class="line">height: calc(100px - 30px);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在上面的代码中，我使用 calc() 来设置 div 的宽度和高度。</p><p><img src="https://alanni-1.github.io/blog/img/8d3432c/02.png"></p><h1 id="3、max"><a href="#3、max" class="headerlink" title="3、max()"></a><strong>3、max()</strong></h1><p>然后我们有 max()，它需要两个值并使用该 CSS 属性的最大值。这对于制作响应式宽度和高度很有用。</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">--- html ---</span><br><span class="line">&lt;div class=&quot;box&quot;&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">--- css ---</span><br><span class="line">.box &#123;</span><br><span class="line">width: max(50%, 500px);</span><br><span class="line">height: max(60%, 300px);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在这种情况下，div 将具有最大可能的宽度和高度，如果 50% 大于 500px，则其宽度将为 50%，否则为 500px，高度也是一样。</p><h1 id="4、-min"><a href="#4、-min" class="headerlink" title="4、 min()"></a><strong>4、 min()</strong></h1><p>最后但并非最不重要的一点是，我们有 min()，它需要两个值并使用该 CSS 属性的最小值。这与 max() 正好相反。</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">--- html ---</span><br><span class="line">&lt;div class=&quot;box&quot;&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">--- css ---</span><br><span class="line">.box &#123;</span><br><span class="line">width: min(50%, 500px);</span><br><span class="line">height: min(60%, 300px);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>所以，这个输出将与我们的 max() 完全相反。它将其宽度和高度设置为最小值。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 每天学点小知识 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>为什么Proxy一定要配合Reflect使用</title>
       <link href="/blog/2022/05/02/01692a6/"/>
       <url>/blog/2022/05/02/01692a6/</url>
